@@ -1,0 +1,58 @@
+server:
+  port: 8080
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3307/project_Y?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
+    username: root
+    password:
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id:
+            client-secret:
+            scope: user:email
+            redirect-uri: "{baseUrl}/login/oauth2/code/github"
+            client-name: GitHub
+
+          google:  # ? Google ?? ??
+            client-id:
+            client-secret:   # ? ??? ?? ???? ??
+            redirect-uri: "{baseUrl}/login/oauth2/code/google"
+            scope:
+              - profile
+              - email
+            client-name: Google
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+            user-info-uri: https://api.github.com/user
+          google:  # ? Google provider ??
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub  # Google?? ?? ID? "sub"
+
+mybatis:
+  type-aliases-package: org.example.vo
+  mapper-locations: classpath:/mappers/**/*.xml
+
+logging:
+  level:
+    org.mybatis: DEBUG
+    org.example.repository: DEBUG
