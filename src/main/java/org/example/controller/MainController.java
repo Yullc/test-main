@@ -21,7 +21,7 @@ public class MainController {
         String oauthId = principal.getName();
 
         Member member = memberService.getByOauthId(oauthId);
-
+        System.out.println(member);
         model.addAttribute("member", member);
 
         return "main";
